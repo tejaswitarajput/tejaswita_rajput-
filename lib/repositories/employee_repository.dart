@@ -72,4 +72,43 @@ class EmployeeRepository {
         .onError((error, stackTrace) => print(error));
     return success;
   }
+
+  Future<EmployeeDetailModel> fetchSingleEmployeeRecord(
+      String employeeId) async {
+    bool success = false;
+    print("key4 == ${employeeId.toString()}");
+
+    List<EmployeeDetailModel> employeeDetailModel = [];
+    EmployeeDetailModel singleEmployeeRecord = EmployeeDetailModel();
+    employeeDetailModel = await fetchEmployeeDetails();
+    String employeeKey = "";
+    employeeDetailModel.forEach((element) {
+      print(element.key.toString() + "==" + employeeId);
+      if (element.key.toString() == employeeId) {
+        employeeKey = element.key.toString();
+        singleEmployeeRecord = element;
+      }
+    });
+    return singleEmployeeRecord;
+  }
+
+  updateEmployeeDetails(EmployeeDetailModel employeeDetailModel) async {
+    bool success = false;
+    EmployeeDetailModel empTemp = EmployeeDetailModel();
+    empTemp = await fetchSingleEmployeeRecord(employeeDetailModel.key);
+    DocumentReference employeeDetails =
+        FirebaseFirestore.instance.collection("Employees").doc(empTemp.key);
+    await employeeDetails.update({
+      'name': empTemp.name.toString(),
+      'emailId': empTemp.emailId.toString(),
+      'designation': empTemp.designation.toString(),
+      'key': empTemp.key.toString(),
+    }).whenComplete(() {
+      print("Employee added");
+      success = true;
+    }).onError((error, stackTrace) {
+      print("Failed to add employee: $error");
+    });
+    return success;
+  }
 }

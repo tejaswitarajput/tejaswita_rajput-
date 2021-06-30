@@ -7,8 +7,9 @@ import '../circular_progressbar_fullscreen.dart';
 import '../palette.dart';
 
 class CreateEmployeeScreen extends StatefulWidget {
-  const CreateEmployeeScreen({Key key}) : super(key: key);
+  final String employeeId;
 
+  const CreateEmployeeScreen({Key key, this.employeeId}) : super(key: key);
   @override
   _CreateEmployeeScreenState createState() => _CreateEmployeeScreenState();
 }
@@ -21,12 +22,20 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
     var prov = Provider.of<EmployeeProvider>(context, listen: false);
 
     prov.init();
+    print("id==${widget.employeeId}");
+    if (widget.employeeId != null) {
+      prov.employeeDetailId = widget.employeeId;
+      print("Name==${prov.employeeDetailModel.name}");
+    }
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<EmployeeProvider>(builder: (context, prov, child) {
+      print("Name==${prov.employeeDetailModel.name}");
+
       return AbsorbPointer(
         absorbing: prov.loading ? true : false,
         child: Scaffold(
@@ -53,7 +62,7 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
                               // labelStyle: Constants().subtitle1,
                               border: UnderlineInputBorder(),
                             ),
-                            initialValue: prov.employeeDetailModel.name ?? null,
+                            initialValue: prov.employeeDetailModel.name,
                             onChanged: (value) {
                               prov.employeeDetailModel.name = value.toString();
                             },

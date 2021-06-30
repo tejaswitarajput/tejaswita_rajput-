@@ -18,9 +18,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case RouterConstants.HomeScreenRoute:
       return MaterialPageRoute(
           settings: settings, builder: (context) => HomeScreen());
+
     case RouterConstants.CreateEmployeeScreenRoute:
+      arguments = settings.arguments as EmployeeArgument;
       return MaterialPageRoute(
-          settings: settings, builder: (context) => CreateEmployeeScreen());
+        settings: settings,
+        builder: (context) => CreateEmployeeScreen(
+          employeeId: arguments.employeeId,
+        ),
+      );
     default:
       return MaterialPageRoute(
           settings: settings, builder: (context) => HomeScreen());
@@ -67,3 +73,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 //     });
 //   }
 // }
+
+class EmployeeArgument {
+  String employeeId;
+
+  EmployeeArgument({this.employeeId});
+}

@@ -1,3 +1,4 @@
+import 'package:demo_projec/constants/route_generator.dart';
 import 'package:demo_projec/providers/employee_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,53 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: EdgeInsets.all(20),
                                   color: Colors.white,
                                   child: Scaffold(
-                                    body: Container(),
+                                    body: Container(
+                                        child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: IconButton(
+                                                icon: new Icon(Icons.close),
+                                                color: Colors.black,
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              )),
+                                        ),
+                                        MaterialButton(
+                                          onPressed: () {
+                                            Navigator.pushNamed(
+                                                context,
+                                                RouterConstants
+                                                    .CreateEmployeeScreenRoute,
+                                                arguments: EmployeeArgument(
+                                                    employeeId: ""));
+                                          },
+                                          minWidth: 250.0,
+                                          height: 35,
+                                          color: Colors.blueAccent,
+                                          child: new Text('Create Employee',
+                                              style: new TextStyle(
+                                                  fontSize: 16.0,
+                                                  color: Colors.white)),
+                                        ),
+                                        MaterialButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          minWidth: 250.0,
+                                          height: 35,
+                                          color: Colors.blueAccent,
+                                          child: new Text('Employee List',
+                                              style: new TextStyle(
+                                                  fontSize: 16.0,
+                                                  color: Colors.white)),
+                                        )
+                                      ],
+                                    )),
                                   ),
                                 ),
                               );
@@ -199,7 +246,8 @@ class EmployeeCardWidget extends StatelessWidget {
                       icon: Icon(Icons.edit, size: 25.0),
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, RouterConstants.CreateEmployeeScreenRoute);
+                            context, RouterConstants.CreateEmployeeScreenRoute,
+                            arguments: EmployeeArgument(employeeId: empKey));
                       }),
                   IconButton(
                       icon: Icon(Icons.delete, size: 25.0),

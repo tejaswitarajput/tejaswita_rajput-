@@ -6,10 +6,17 @@ class EmployeeProvider extends ChangeNotifier {
   EmployeeDetailModel employeeDetailModel = EmployeeDetailModel();
   bool loading = false;
   List<EmployeeDetailModel> employeeDetailList = [];
+  String employeeDetailId = "";
 
   init() async {
     employeeDetailModel = EmployeeDetailModel();
     await fetchSavedList();
+    if (employeeDetailId != null) {
+      print("employee==$employeeDetailId");
+      await fetchSingleEmpRecord(employeeDetailId);
+      notifyListeners();
+      print("employee==${employeeDetailModel.name}.");
+    }
   }
 
   checkData() {
@@ -45,6 +52,8 @@ class EmployeeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  fetchEmployee(String empId) {}
+
   Future<bool> deleteEmployee(EmployeeDetailModel employeeDetailModel) async {
     bool status = false;
     String employeeId = '';
@@ -63,5 +72,20 @@ class EmployeeProvider extends ChangeNotifier {
       }
     }
     return status;
+  }
+
+  fetchSingleEmpRecord(String employeeId) async {
+    employeeDetailModel =
+        await EmployeeRepository().fetchSingleEmployeeRecord(employeeId);
+    notifyListeners();
+  }
+
+  updateEmployeeRecord(String employeeId) async {
+    bool success = false;
+    employeeDetailModel =
+        await EmployeeRepository().fetchSingleEmployeeRecord(employeeId);
+    success = EmployeeRepository().updateEmployeeDetails(employeeDetailModel);
+
+    return success;
   }
 }
