@@ -1,32 +1,20 @@
+import 'package:demo_projec/constants/circular_progressbar_fullscreen.dart';
+import 'package:demo_projec/constants/palette.dart';
 import 'package:demo_projec/constants/snackbar.dart';
 import 'package:demo_projec/providers/employee_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../circular_progressbar_fullscreen.dart';
-import '../palette.dart';
-
 class CreateEmployeeScreen extends StatefulWidget {
-  final String employeeId;
-
-  const CreateEmployeeScreen({Key key, this.employeeId}) : super(key: key);
   @override
   _CreateEmployeeScreenState createState() => _CreateEmployeeScreenState();
 }
 
 class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
-  // TextEditingController nameController = TextEditingController();
-  // TextEditingController emailIdController = TextEditingController();
-  // TextEditingController designationController = TextEditingController();
+  @override
   void initState() {
     var prov = Provider.of<EmployeeProvider>(context, listen: false);
-
     prov.init();
-    print("id==${widget.employeeId}");
-    if (widget.employeeId != null) {
-      prov.employeeDetailId = widget.employeeId;
-      print("Name==${prov.employeeDetailModel.name}");
-    }
 
     super.initState();
   }
@@ -41,7 +29,7 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Text('Add New Employee'),
+            title: Text('Create Employee'),
             backgroundColor: Palette.primary,
           ),
           body: Stack(
@@ -49,7 +37,6 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
             children: [
               Container(
                 color: prov.loading ? Colors.white : Colors.white,
-
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: SingleChildScrollView(
@@ -135,7 +122,7 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
                                 borderRadius: BorderRadius.circular(18.0),
                               ),
                               child: Text(
-                                'Submit',
+                                'Create Employee',
                                 style: TextStyle(color: Colors.white),
                               ),
                               //   ),
@@ -147,48 +134,6 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
                     ),
                   ),
                 ),
-
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: Container(
-                //     height: 50,
-                //     width: double.infinity,
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //       crossAxisAlignment: CrossAxisAlignment.stretch,
-                //       children: [
-                //         SizedBox(width: 10),
-                //         Expanded(
-                //           child: RaisedButton(
-                //             onPressed: () async {
-                //               String checkData = prov.checkData();
-                //               if (checkData == '' || checkData == 'success') {
-                //                 if (await prov.save()) {
-                //                   prov.loading = false;
-                //                   showSnackBar(
-                //                       context: context,
-                //                       message: "Data Saved Successfully");
-                //                 } else {
-                //                   showSnackBar(
-                //                       context: context,
-                //                       message: "Data Saved Filed");
-                //                 }
-                //               }
-                //             },
-                //             color: Colors.blue,
-                //             shape: RoundedRectangleBorder(
-                //               borderRadius: BorderRadius.circular(18.0),
-                //             ),
-                //             child: Text(
-                //               'Submit',
-                //               style: TextStyle(color: Colors.white),
-                //             ),
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
               ),
               Positioned(
                 child: prov.loading

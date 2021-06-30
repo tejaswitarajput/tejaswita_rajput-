@@ -1,12 +1,11 @@
-import 'package:demo_projec/constants/fetures/splash_screen.dart';
 import 'package:demo_projec/providers/employee_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:provider/provider.dart';
 import 'constants/route_generator.dart' as router;
 import 'constants/palette.dart';
 import 'constants/router_constants.dart';
+import 'fetures/splash_screen.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();

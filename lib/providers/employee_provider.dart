@@ -13,10 +13,14 @@ class EmployeeProvider extends ChangeNotifier {
     await fetchSavedList();
     if (employeeDetailId != null) {
       print("employee==$employeeDetailId");
-      await fetchSingleEmpRecord(employeeDetailId);
-      notifyListeners();
+      // await fetchSingleEmpRecord(employeeDetailId);
+      //   notifyListeners();
       print("employee==${employeeDetailModel.name}.");
     }
+  }
+
+  Future<void> initDetails() async {
+    await fetchSingleEmpRecord(employeeDetailId);
   }
 
   checkData() {
@@ -35,14 +39,32 @@ class EmployeeProvider extends ChangeNotifier {
   }
 
   Future<bool> save() async {
+    bool success = false;
     loading = true;
     notifyListeners();
-    return await EmployeeRepository()
-        .save(employeeDetailModel)
+    success =
+        await EmployeeRepository().save(employeeDetailModel).whenComplete(() {
+      loading = false;
+      notifyListeners();
+    });
+    await fetchSavedList();
+    notifyListeners();
+    return success;
+  }
+
+  Future<bool> update() async {
+    bool success = false;
+    loading = true;
+    notifyListeners();
+    success = await EmployeeRepository()
+        .updateEmployeeDetails(employeeDetailModel)
         .whenComplete(() {
       loading = false;
       notifyListeners();
     });
+    await fetchSavedList();
+    notifyListeners();
+    return success;
   }
 
   Future<void> fetchSavedList() async {
@@ -74,17 +96,19 @@ class EmployeeProvider extends ChangeNotifier {
     return status;
   }
 
-  fetchSingleEmpRecord(String employeeId) async {
+  Future<void> fetchSingleEmpRecord(String employeeId) async {
     employeeDetailModel =
         await EmployeeRepository().fetchSingleEmployeeRecord(employeeId);
+    print("fetch==${employeeDetailModel.name}");
     notifyListeners();
   }
 
-  updateEmployeeRecord(String employeeId) async {
+  Future<bool> updateEmployeeRecord(String employeeId) async {
     bool success = false;
     employeeDetailModel =
         await EmployeeRepository().fetchSingleEmployeeRecord(employeeId);
-    success = EmployeeRepository().updateEmployeeDetails(employeeDetailModel);
+    success =
+        await EmployeeRepository().updateEmployeeDetails(employeeDetailModel);
 
     return success;
   }

@@ -1,10 +1,10 @@
-import 'package:demo_projec/constants/fetures/create_employee_screen.dart';
-import 'package:demo_projec/constants/fetures/home_screen.dart';
 import 'package:demo_projec/constants/router_constants.dart';
+import 'package:demo_projec/fetures/create_employee_screen.dart';
+import 'package:demo_projec/fetures/edit_employee_detail_screen.dart';
+import 'package:demo_projec/fetures/home_screen.dart';
+import 'package:demo_projec/fetures/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'fetures/splash_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   // Here we'll handle all the routing
@@ -20,10 +20,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           settings: settings, builder: (context) => HomeScreen());
 
     case RouterConstants.CreateEmployeeScreenRoute:
+      //  arguments = settings.arguments as EmployeeArgument;
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (context) => CreateEmployeeScreen(),
+      );
+    case RouterConstants.EditEmployeeScreenRoute:
       arguments = settings.arguments as EmployeeArgument;
       return MaterialPageRoute(
         settings: settings,
-        builder: (context) => CreateEmployeeScreen(
+        builder: (context) => EditEmployeeScreen(
           employeeId: arguments.employeeId,
         ),
       );

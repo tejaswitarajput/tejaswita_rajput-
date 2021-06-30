@@ -75,34 +75,35 @@ class EmployeeRepository {
 
   Future<EmployeeDetailModel> fetchSingleEmployeeRecord(
       String employeeId) async {
-    bool success = false;
     print("key4 == ${employeeId.toString()}");
 
-    List<EmployeeDetailModel> employeeDetailModel = [];
+//    List<EmployeeDetailModel> employeeDetailModel = [];
     EmployeeDetailModel singleEmployeeRecord = EmployeeDetailModel();
-    employeeDetailModel = await fetchEmployeeDetails();
-    String employeeKey = "";
-    employeeDetailModel.forEach((element) {
-      print(element.key.toString() + "==" + employeeId);
-      if (element.key.toString() == employeeId) {
-        employeeKey = element.key.toString();
-        singleEmployeeRecord = element;
-      }
+    DocumentReference reference =
+        FirebaseFirestore.instance.collection("Employees").doc(employeeId);
+    await reference.get().then((DocumentSnapshot doc) {
+      singleEmployeeRecord.name = doc["name"];
+      singleEmployeeRecord.emailId = doc["emailId"];
+      singleEmployeeRecord.designation = doc["designation"];
+      singleEmployeeRecord.key = doc.id;
     });
+    print("fetchdeepak == ${singleEmployeeRecord.name}");
+
     return singleEmployeeRecord;
   }
 
-  updateEmployeeDetails(EmployeeDetailModel employeeDetailModel) async {
+  Future<bool> updateEmployeeDetails(
+      EmployeeDetailModel employeeDetailModel) async {
     bool success = false;
-    EmployeeDetailModel empTemp = EmployeeDetailModel();
-    empTemp = await fetchSingleEmployeeRecord(employeeDetailModel.key);
-    DocumentReference employeeDetails =
-        FirebaseFirestore.instance.collection("Employees").doc(empTemp.key);
+
+    DocumentReference employeeDetails = FirebaseFirestore.instance
+        .collection("Employees")
+        .doc(employeeDetailModel.key);
     await employeeDetails.update({
-      'name': empTemp.name.toString(),
-      'emailId': empTemp.emailId.toString(),
-      'designation': empTemp.designation.toString(),
-      'key': empTemp.key.toString(),
+      'name': employeeDetailModel.name.toString(),
+      'emailId': employeeDetailModel.emailId.toString(),
+      'designation': employeeDetailModel.designation.toString(),
+      'key': employeeDetailModel.key.toString(),
     }).whenComplete(() {
       print("Employee added");
       success = true;
