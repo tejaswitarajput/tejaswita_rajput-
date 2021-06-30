@@ -15,9 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // TextEditingController nameController = TextEditingController();
-  // TextEditingController emailIdController = TextEditingController();
-  // TextEditingController designationController = TextEditingController();
   void initState() {
     var prov = Provider.of<EmployeeProvider>(context, listen: false);
 
@@ -126,7 +123,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             backgroundImage:
                                 AssetImage('assets/icons/logo.png'),
                             radius: 30),
-                        Text("Demo App"),
+                        Text(
+                          "Welcome Conaug Flutters",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          "App Developer",
+                          style: TextStyle(color: Colors.white, fontSize: 12),
+                        ),
                       ],
                     ),
                     MaterialButton(
