@@ -21,12 +21,11 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => EmployeeProvider()),
       ],
       child: MaterialApp(
-        color: Palette.primary, debugShowCheckedModeBanner: false,
+        color: Palette.primary,
+        debugShowCheckedModeBanner: false,
         home: SplashScreen(),
         onGenerateRoute: router.generateRoute,
         initialRoute: RouterConstants.MainRoute,
-        //   routes: <String, WidgetBuilder>{
-        // '/InitialScreen': (BuildContext context) => SplashScreen(),
       ),
     );
   }
