@@ -34,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
               pinned: true,
               expandedHeight: 200,
               stretch: true,
+
               // title: Text("Demo App"),
               flexibleSpace: FlexibleSpaceBar(
                   background: Row(
