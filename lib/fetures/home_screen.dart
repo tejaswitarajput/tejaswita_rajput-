@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: EdgeInsets.all(20),
                                   color: Colors.white,
                                   child: Scaffold(
-                                    body: Container(
+                                    body: Card(
                                         child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
